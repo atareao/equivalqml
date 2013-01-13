@@ -21,6 +21,7 @@ import es.atareao.test05.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -36,6 +37,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 public class MainActivity extends Activity {
+	public static final String EQUIVAL_CONFIGURATION_NAME = "EquivalConfiguration";
 	private EditText value_from;
 	private EditText value_to;
 	private Spinner magnitudes;
@@ -64,9 +66,16 @@ public class MainActivity extends Activity {
 		});
 		List<String> SpinnerArray = this.get_magnitudes();
 	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SpinnerArray);
-	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    
-	    magnitudes.setAdapter(adapter);
+	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);	    
+	    magnitudes.setAdapter(adapter); 
+		// Restore preferences
+	    SharedPreferences settings = getSharedPreferences(EQUIVAL_CONFIGURATION_NAME, 0);
+	    int magnitud_id = settings.getInt("magnitud_id", 0);
+	    int unit_from_id = settings.getInt("unit_from_id", 0);
+	    int unit_to_id = settings.getInt("unit_to_id", 0);	    
+	    magnitudes.setSelection(magnitud_id);
+	    unit_from.setSelection(unit_from_id);
+	    unit_to.setSelection(unit_to_id);
 	    /*convert();*/
 	    magnitudes.setOnItemSelectedListener(new OnItemSelectedListener(){
 			@Override
@@ -75,8 +84,15 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				String fu = String.valueOf(magnitudes.getSelectedItem());
 				set_values_on_spinner(fu);
+			    SharedPreferences settings = getSharedPreferences(EQUIVAL_CONFIGURATION_NAME, 0);
+			    int magnitud_id = settings.getInt("magnitud_id", 0);
+			    int unit_from_id = settings.getInt("unit_from_id", 0);
+			    int unit_to_id = settings.getInt("unit_to_id", 0);	    
+			    if(magnitudes.getSelectedItemPosition() == magnitud_id){
+				    unit_from.setSelection(unit_from_id);
+				    unit_to.setSelection(unit_to_id);			    	
+			    }				
 				convert_from();
-				/*convert_to();*/
 			}
 
 			@Override
@@ -248,6 +264,21 @@ public class MainActivity extends Activity {
 		});
 		*/
 	}
+
+	@Override
+    protected void onStop(){
+		super.onStop();
+		// We need an Editor object to make preference changes.
+		// All objects are from android.context.Context
+		SharedPreferences settings = getSharedPreferences(EQUIVAL_CONFIGURATION_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putInt("magnitud_id",magnitudes.getSelectedItemPosition());
+		editor.putInt("unit_from_id",unit_from.getSelectedItemPosition());
+		editor.putInt("unit_to_id",unit_to.getSelectedItemPosition());
+		// Commit the edits!
+		editor.commit();
+	}
+	
 	public double convert2double(String cadena){
 		if(cadena == ""){
 			return 0.0;
