@@ -13,7 +13,7 @@ Rectangle{
         console.log('loading');
         JS.loadtxt(myspeciallabel);
         console.log('myspeciallabel loaded');
-    }/*
+    }
     Component {
                  id: dialog
                  Dialog {
@@ -62,7 +62,7 @@ Rectangle{
             }
             onDoneClicked: PopupUtils.close(sheet)
         }
-    }*/
+    }
     Tabs {
         ItemStyle.class: "new-tabs"
         id: tabs
