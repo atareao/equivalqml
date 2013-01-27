@@ -1,3 +1,17 @@
+function loadtxt(myobject){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","lorem2.txt",true);
+    xhr.onreadystatechange = function()
+    {
+        if ( xhr.readyState == xhr.DONE)
+        {
+            var texto = xhr.responseText;
+            myobject.text = texto;
+        };
+    }
+    xhr.send();
+}
+
 function load(listModel,theunits, selectorfrom,selectorto) {
 
     listModel.clear();
