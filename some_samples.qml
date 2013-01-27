@@ -15,27 +15,27 @@ Rectangle{
         console.log('myspeciallabel loaded');
     }
     Component {
-                 id: dialog
-                 Dialog {
-                     id: dialogue
-                     title: "Guardar"
-                     text: "Estas seguro?"
-                     Button {
-                         text: "Cancelar"
-                         onClicked: PopupUtils.close(dialogue)
-                     }
-                     Button {
-                         text: "Sobreescribir"
-                         color: "orange"
-                         onClicked: PopupUtils.close(dialogue)
-                     }
-                     Button {
-                         text: "Guardar"
-                         color: "orange"
-                         onClicked: PopupUtils.close(dialogue)
-                     }
-                 }
+        id: dialog
+        Dialog {
+            id: dialogue
+            title: "Guardar"
+            text: "Estas seguro?"
+            Button {
+                text: "Cancelar"
+                onClicked: PopupUtils.close(dialogue)
             }
+            Button {
+                text: "Sobreescribir"
+                color: "orange"
+                onClicked: PopupUtils.close(dialogue)
+            }
+            Button {
+                text: "Guardar"
+                color: "orange"
+                onClicked: PopupUtils.close(dialogue)
+            }
+        }
+    }
     Component {
         id: composerSheet
         ComposerSheet {
@@ -54,7 +54,7 @@ Rectangle{
         DefaultSheet {
             id: sheet
             title: "Default sheet with done button"
-            width:units.gu(10)
+            anchors.fill: parent
             doneButton: true
             Label {
                 text: "A default sheet with a done button."
@@ -73,7 +73,10 @@ Rectangle{
             page: Rectangle {
                 anchors.fill: parent
                 color: "#eeeeee"
-
+                Scrollbar {
+                            flickableItem: flickable
+                            align: Qt.AlignTrailing
+                        }
                 Flickable {
                     id: flickable
                     clip: true
