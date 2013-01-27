@@ -7,13 +7,13 @@ import "parser.js" as JS
 Rectangle{
     id: root
     width: units.gu(50)
-    height: units.gu(80)
+    height: units.gu(90)
     color:"lightgray"
     Component.onCompleted: {
         console.log('loading');
         JS.loadtxt(myspeciallabel);
         console.log('myspeciallabel loaded');
-    }
+    }/*
     Component {
                  id: dialog
                  Dialog {
@@ -62,18 +62,12 @@ Rectangle{
             }
             onDoneClicked: PopupUtils.close(sheet)
         }
-    }
+    }*/
     Tabs {
         ItemStyle.class: "new-tabs"
         id: tabs
         selectedTabIndex: 2
-        anchors{
-            top:parent.top
-            left:parent.left
-            right:parent.right
-            fill: parent
-
-        }
+        anchors.fill: parent
         Tab {
             title: "Tipo desplazable"
             page: Rectangle {
@@ -115,28 +109,40 @@ Rectangle{
         Tab {
             title: "Mis botones"
             page: Rectangle {
-                anchors{
-                    fill:parent
-                }
+                anchors.fill:parent
                 color: "tan"
-                Row {
+                Column{
                     anchors.centerIn: parent
-                    Button {
-                        width: units.gu(25)
-                        text: "A la pestaña anterior"
-                        onClicked: tabs.selectedTabIndex--
+                    Row{
+                        Button {
+                            id: button1
+                            width: units.gu(25)
+                            text: "A la anterior"
+                            onClicked: tabs.selectedTabIndex--
+                        }
                     }
-                    Button {
-                        width: units.gu(25)
-                        text: "A la pestaña siguiente"
-                        onClicked: tabs.selectedTabIndex++
+                    Row{
+                        UbuntuShape {
+                            width: units.gu(25)
+                            color: "lightblue"
+                            radius: "medium"
+                        }
                     }
+                    Row{
+                        Button {
+                            id: button2
+                            width: units.gu(25)
+                            text: "A la anterior"
+                            onClicked: tabs.selectedTabIndex--
+                        }
+                    }
+
                 }
             }
         }
         Tab {
             title: "Una pila de páginas"
-            PageStack {
+            page:PageStack {
                    id: pageStack
                    anchors.fill: parent
 
@@ -144,7 +150,7 @@ Rectangle{
 
                     Page {
                         id: page0
-                        title: "Pagina princiapl"
+                        title: "Pagina principal"
                         anchors.fill: parent
 
                         Column {

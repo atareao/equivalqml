@@ -1,14 +1,16 @@
 function loadtxt(myobject){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET","lorem2.txt",true);
+    xhr.open("GET","lorem",true);
+    console.log('1');
     xhr.onreadystatechange = function()
     {
+        console.log('2');
         if ( xhr.readyState == xhr.DONE)
         {
             var texto = xhr.responseText;
             myobject.text = texto;
         };
-    }
+    };
     xhr.send();
 }
 
