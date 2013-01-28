@@ -43,7 +43,7 @@ Rectangle{
             title: "Composer sheet"
             width: units.gu(30)
             Label {
-                text: "A composer sheet has cancel and confirm buttons."
+                text: "Este tipo de sheet tiene botón de aceptar y cancelar."
             }
             onCancelClicked: PopupUtils.close(sheet)
             onConfirmClicked: PopupUtils.close(sheet)
@@ -53,11 +53,11 @@ Rectangle{
         id: defaultSheet
         DefaultSheet {
             id: sheet
-            title: "Default sheet with done button"
+            title: "Default sheet"
             anchors.fill: parent
             doneButton: true
             Label {
-                text: "A default sheet with a done button."
+                text: "Este tipo puede tener botón de confirmar."
                 wrapMode: Text.WordWrap
             }
             onDoneClicked: PopupUtils.close(sheet)
