@@ -13,6 +13,7 @@ Rectangle{
         console.log('loading');
         JS.loadtxt(myspeciallabel);
         console.log('myspeciallabel loaded');
+        activity.running = true;
     }
     Component {
         id: dialog
@@ -215,6 +216,79 @@ Rectangle{
                             text: "Guardar"
                             width: units.gu(20)
                             onClicked: PopupUtils.open(dialog, saveButton)
+                        }
+                    }
+            }
+        }
+        Tab{
+            title: "Controles"
+            page:
+                Column{
+                    anchors.centerIn: parent
+                    spacing: units.gu(1)
+                    Row{
+                        ActivityIndicator {
+                            id: activity
+                            MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: {
+                                        activity.running = !activity.running;
+                                        switchbox.checked = activity.running;
+                                        checkbox.checked = activity.running;
+                                    }
+                                }
+                        }
+                    }
+                    Row{
+                        CheckBox {
+                            id: checkbox;
+                            checked: true
+                            onClicked: {
+                                switchbox.checked = checked;
+                                activity.running = checked;
+                            }
+                       }
+                    }
+                    Row{
+                        ProgressBar {
+                                    id: progressbar
+                                    minimumValue: 0.0
+                                    maximumValue: 10.0
+                                    value:5.0
+                                }
+                    }
+                    Row{
+                        Slider {
+                                    function formatValue(v) { return v.toFixed(1) }
+                                    minimumValue: 0.0
+                                    maximumValue: 10.0
+                                    value: 5.0
+                                    live: true
+                                    onClicked: {
+                                        progressbar.value = value;
+                                    }
+                                }
+                    }
+                    Row{
+                        Switch {
+                            id: switchbox
+                            checked: true
+                            onClicked: {
+                                checkbox.checked = checked;
+                                activity.running = checked;
+                                }
+                            }
+                    }
+                    Row{
+                        TextArea{
+                            id: mytextarea
+                            text: "Esto es una prueba"
+                        }
+                    }
+                    Row{
+                        TextField {
+                            placeholderText: "Escribe algo aquí"
+                            validator: RegExpValidator { regExp: /\d{8}-[A-Z]|X-\d{7}-[A-Z]/ }
                         }
                     }
             }
